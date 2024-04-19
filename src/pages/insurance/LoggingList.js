@@ -10,10 +10,6 @@ import UseWeb3 from "../../hooks/UseWeb3";
 import MedicalLogging from '../../components/contracts/MedicalLogging.json';
 import MeritzLogo from "../../images/MeritzLogo.svg";
 
-const TitleContainer = Styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 
 const Bar = Styled.div`
   border-radius: 12px;
@@ -52,9 +48,9 @@ const Table = Styled.table`
 `
 
 function LoggingList() {
-    const [web3, account] = UseWeb3();
-    const [loggings, setLogging] = useState([]);
 
+    const [loggings, setLogging] = useState([]);
+    const [web3, account] =  UseWeb3();
     // 데이터 불러오기
     const getLoggingData = async () => {
         const networkId = await web3.eth.net.getId();
@@ -63,10 +59,11 @@ function LoggingList() {
         const Deployed = new web3.eth.Contract(abi, CA); // 배포한 컨트랙트 정보 가져오기
         const log = await Deployed.methods.getHospitalRecord(account).call();
         setLogging(log.loggings);
-        console.log(loggings);
+        console.log(log);
     };
 
     useEffect(() => {
+        if(account == null || web3 == null) return;
         getLoggingData();
     }, [web3, account]);
 

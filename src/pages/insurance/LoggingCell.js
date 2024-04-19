@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 export const LineTr = styled.tr`
   color: #4c4c4c;
@@ -12,7 +13,11 @@ export const LineTr = styled.tr`
 function LoggingCell(props) {
     return (
         <LineTr>
-            <td width="60%">{props.transactionHash}</td>
+            <td width="60%"><Link to={{
+                pathname: `/details/${props.transactionHash}`,
+                state: {data: props}
+            }}>{props.transactionHash}</Link></td>
+
             <td width="40%">{props.date}</td>
         </LineTr>
     )
