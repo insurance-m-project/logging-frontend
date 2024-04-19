@@ -12,8 +12,8 @@ export const LineTr = styled.tr`
 function LoggingCell(props) {
     return (
         <LineTr>
-            <td width="30%">{props.transactionHash}</td>
-            <td width="30%">{props.date}</td>
+            <td width="50%">{props.transactionHash}</td>
+            <td width="50%">{props.date}</td>
         </LineTr>
     )
 }

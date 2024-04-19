@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Container,
     HospitalText,
@@ -7,6 +7,8 @@ import {
 } from "../../components/container/Container";
 import Styled from "styled-components";
 import LoggingCell from "./LoggingCell";
+import UseWeb3 from "../../hooks/UseWeb3";
+import MedicalLogging from '../../components/contracts/MedicalLogging.json';
 
 const TitleContainer = Styled.div`
   display: flex;
@@ -48,7 +50,25 @@ const Table = Styled.table`
   top: 0;
   table-layout: fixed;
 `
+
 function LoggingList() {
+    const [web3, account] = UseWeb3();
+    const [loggings, setLogging] = useState([]);
+
+    const getLoggingData = async () => {
+        const networkId = await web3.eth.net.getId();
+        const CA = MedicalLogging.networks[networkId].address;
+        const abi = MedicalLogging.abi;
+        const Deployed = new web3.eth.Contract(abi, CA); // 배포한 컨트랙트 정보 가져오기
+        const log = await Deployed.methods.getHospitalRecord(account).call();
+        setLogging(log.loggings);
+        console.log(loggings);
+    };
+
+    useEffect(() => {
+        getLoggingData();
+    }, [web3]);
+
     return (
         <Container>
             <TitleContainer>
@@ -61,15 +81,18 @@ function LoggingList() {
                     <Table>
                         <TransactionThead>
                             <tr>
-                                <th width="70%">Transaction Hash</th>
-                                <th width="30%">Date</th>
+                                <th width="50%">Transaction Hash</th>
+                                <th width="50%">Date</th>
                             </tr>
                         </TransactionThead>
                         <tbody>
-                            <LoggingCell
-                                transactionHash={"ddkk"}
-                                date={"dkdk"}
+
+                        {loggings.map(function (info, i){
+                            return <LoggingCell
+                                transactionHash={info.transactionHash}
+                                date={info.date}
                             />
+                        })}
                         </tbody>
                     </Table>
                 </TableContainer>
