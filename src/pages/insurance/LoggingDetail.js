@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Styled from "styled-components"
 import UseWeb3 from '../../hooks/UseWeb3';
-import {Container, HospitalText, SystemTitleText, BasicContainer} from "../../components/container/Container";
+import {Container, HospitalText, SystemTitleLogo, BasicContainer} from "../../components/container/Container";
 import SearchButtonImage from "../../images/SearchPlus.svg"
 import {addMedicalRecords} from "../../components/contracts/MedicalRecord";
 
@@ -263,7 +263,7 @@ function LoggingDetail() {
     return (
         <Container>
             <TitleContainer>
-                <SystemTitleText> 보험 서류 청구 시스템 </SystemTitleText>
+                <SystemTitleLogo> 보험 서류 청구 시스템 </SystemTitleLogo>
                 <HospitalText>연세이비인후과의원</HospitalText>
             </TitleContainer>
             <Bar/>

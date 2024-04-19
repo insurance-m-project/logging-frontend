@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
     Container,
-    HospitalText,
-    SystemTitleText,
+    SystemTitleLogo,
     WhiteContainer
 } from "../../components/container/Container";
 import Styled from "styled-components";
 import LoggingCell from "./LoggingCell";
 import UseWeb3 from "../../hooks/UseWeb3";
 import MedicalLogging from '../../components/contracts/MedicalLogging.json';
+import MeritzLogo from "../../images/MeritzLogo.svg";
 
 const TitleContainer = Styled.div`
   display: flex;
@@ -55,6 +55,7 @@ function LoggingList() {
     const [web3, account] = UseWeb3();
     const [loggings, setLogging] = useState([]);
 
+    // 데이터 불러오기
     const getLoggingData = async () => {
         const networkId = await web3.eth.net.getId();
         const CA = MedicalLogging.networks[networkId].address;
@@ -67,22 +68,19 @@ function LoggingList() {
 
     useEffect(() => {
         getLoggingData();
-    }, [web3]);
+    }, [web3, account]);
 
     return (
         <Container>
-            <TitleContainer>
-                <SystemTitleText> 보험 서류청구 시스템 </SystemTitleText>
-                <HospitalText>연세이비인후과의원</HospitalText>
-            </TitleContainer>
+            <SystemTitleLogo src = {MeritzLogo}></SystemTitleLogo>
             <WhiteContainer>
                 <Bar/>
                 <TableContainer>
                     <Table>
                         <TransactionThead>
                             <tr>
-                                <th width="50%">Transaction Hash</th>
-                                <th width="50%">Date</th>
+                                <th width="60%">Transaction Hash</th>
+                                <th width="40%">Date</th>
                             </tr>
                         </TransactionThead>
                         <tbody>
