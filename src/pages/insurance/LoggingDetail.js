@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Styled from "styled-components"
-import {BasicContainer, Container, SystemTitleLogo} from "../../components/container/Container";
+import {Container, SystemTitleLogo, WhiteContainer} from "../../components/container/Container";
 import MeritzLogo from "../../images/MeritzLogo.svg";
 import {useParams} from "react-router-dom";
+import SearchButtonImage from "../../images/SearchPlus.svg"
 import MedicalRecords from "../../components/contracts/MedicalRecords.json";
 import UseWeb3 from "../../hooks/UseWeb3";
+import PrettyJson from "./PrettyJson";
 
-const TitleContainer = Styled.div`
-  display: flex;
-  justify-content: space-between;
-`
 // 표 있는 페이지의 네이비 바
 const Bar = Styled.div`
   border-radius: 12px;
@@ -19,79 +17,11 @@ const Bar = Styled.div`
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  z-index: 1;
   display: flex;
   text-align: left;
   align-items: center;
   padding: 0 30px;
-  justify-content: ${props => props.space ? 'space-between' : null};
 `
-
-const ColumnContainer = Styled.div`
-  height: 40px;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 40px;
-  margin-right: 30px;
-`
-const ShortColumnContainer = Styled(ColumnContainer)`
-  display: flex;
-  width: 30%;
-`
-
-const TableColumnContainer = Styled(ColumnContainer)`
-  display: contents;
-  width: 100%;
-`
-
-const TitleLabel = Styled.label`
-  color: #262DE0;
-  font-size: 20px;
-  width: 150px;
-  min-width: 100px;
-  text-align: left;
-`
-
-const InfoInput = Styled.input.attrs({type: 'text'})`
-  flex: 1;
-  height: 20px;
-  border-radius: 8px;
-  border: 2px solid #E6E6E6;
-  font-size: 20px;
-  padding: 10px;
-`
-
-const MarginColumnContainer = Styled(BasicContainer)`
-  padding: 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`
-const MarginRowContainer = Styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const InfoTable = Styled.table`
-  width: 100%;
-  margin: 0 0 40px 40px;
-  border-collapse: collapse;
-  border: 1px solid #959494;
-  font-size: 17px;
-`
-
-const InfoTableData = Styled.td`
-  border: 1px solid #959494;
-  height: 45px
-`
-
-const InfoTableNumberData = Styled(InfoTableData)`
-  text-align: right;
-  padding-right: 10px;
-`
-
 const ManageAddButtonImage = Styled.img`
   width: 16px;
   height: 16px;
@@ -112,7 +42,7 @@ const ManageAddButton = Styled.button`
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
-  background: #414FCB;
+  background: #E52712;
   display: flex;
   align-items: center;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -122,85 +52,158 @@ const ManageAddButton = Styled.button`
   white-space: nowrap;
 `
 
+const ColumnContainer = Styled.div`
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 30px;
+`
+const ShortColumnContainer = Styled(ColumnContainer)`
+  margin-left: 60px;
+  display: flex;
+  width: 30%;
+`
+const TitleLabel = Styled.label`
+    flex: 1;
+  color: #600000;
+  font-size: 20px;
+  width: 150px;
+  min-width: 100px;
+  text-align: left;
+  margin-right: 100px;
+`
+const RightLabel = Styled(TitleLabel)`  
+   margin-right: 0px;
+`
+
+const InfoInput = Styled.p`
+  flex: 1;
+  min-width: 300px;
+  max-width: 300px;
+  height: 20px;
+  border-radius: 8px;
+  border: 2px solid #E6E6E6;
+  
+  display: inline-block; 
+  font-size: 20px;
+  padding: 10px;
+  text-align: left;
+  overflow-x: auto;
+`
+
+
+const DataInput = Styled(InfoInput)`
+  height: 270px;
+  word-wrap: break-word;
+`
+
+const DataOutput = Styled(InfoInput)`
+  min-width: 500px;
+  height: 450px;
+`
+
+const MarginRowContainer = Styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+  
+`
+const MarginColumnContainer = Styled.div`
+  justify-content: space-around;
+  box-sizing: border-box;
+  // padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+`
+
 function LoggingDetail() {
-
-    const InitialValue = {
-        name: '홍길동',
-        RRN: '010101-3123456',
-        KCD: 'J09',
-        date: '2024-01-01',
-        receiptNumber: '2401-01010',
-        totalOop: null,
-        totalPcc: null,
-        totalFoop: null,
-        nonReimbursement: null
-    };
-
     // attribute
-    const [inputValues, setInputValues] = useState(InitialValue);
-    const {name, RRN, KCD, date, receiptNumber} = inputValues;
-    let {address} = useParams()
-    const [web3, account] =  UseWeb3();
-    const getLoggingData = async () => {
+    let {address} = useParams();
+    const [web3, account] = UseWeb3();
+    const [to, setTo] = useState('');
+    const [from, setFrom] = useState('');
+    const [data, setData] = useState('');
+    const [decodeData, setDecodeData] = useState('');
+    const [logging, setLogging] = useState([]);
 
-        const networkId = await web3.eth.net.getId();
+    const getLoggingData = async () => {
         const abi = MedicalRecords.abi;
-        const log = new web3.eth.getTransactionReceipt(address, function(err, receipt) {
-            if (!err) {
-                receipt.logs.forEach(logs => {
-                    const decodedLog = web3.eth.abi.decodeParameters(abi[0].inputs, logs.data);
-                    console.log(decodedLog);
-                });
-            } else {
-                console.error(err);
-            }
-        }); // 배포한 컨트랙트 정보 가져오기
-        console.log(log);
-        // const log = await Deployed.methods.getHospitalRecord(account).call();
-        // setLogging(log.loggings);
+        const receipt = await new Promise((resolve, reject) => {
+            web3.eth.getTransactionReceipt(address, function (err, receipt) {
+                if (!err) {
+                    const decodedLogs = receipt.logs.map(log => {
+                        return web3.eth.abi.decodeParameters(abi[0].inputs, log.data);
+                    });
+                    console.log(decodedLogs);
+                    setLogging(decodedLogs);
+                    resolve(receipt);
+                } else {
+                    console.error(err);
+                    reject(err);
+                }
+            });
+        });
+        setTo(receipt.to);
+        setFrom(receipt.from);
+        setData(receipt.logs[0].data);
     };
 
 
     useEffect(() => {
-        if(account == null || web3 == null) return;
+        if (account == null || web3 == null) return;
         getLoggingData();
-        console.log(address);
+       console.log(logging);
+    }, [web3]);
 
-    }, [web3, address]);
-
-    const onChangeInput = event => {
-        const {value, name: inputName} = event.target;
-        setInputValues({...inputValues, [inputName]: value});
+    const onClickBtn = event => {
+        alert("실행");
+        const abi = MedicalRecords.abi;
+        console.log();
+        const dataToJson = JSON.stringify(web3.eth.abi.decodeParameters(abi[0].inputs, data), null, 2);
+        setDecodeData(dataToJson);
     }
-
     // const onChange
     return (
         <Container>
             <SystemTitleLogo src={MeritzLogo}></SystemTitleLogo>
-            <Bar/>
-            <MarginColumnContainer>
-                <ShortColumnContainer>
-                    <TitleLabel>보낸주소</TitleLabel>
-                    <InfoInput name='name' value={name} onChange={onChangeInput}/>
-                </ShortColumnContainer>
-                <ShortColumnContainer>
-                    <TitleLabel>받은 주소</TitleLabel>
-                    <InfoInput name='KCD' value={KCD} onChange={onChangeInput}/>
-                </ShortColumnContainer>
-                <ShortColumnContainer>
-                    <TitleLabel>Transaction Hash</TitleLabel>
-                    <InfoInput name='date' value={date} onChange={onChangeInput}/>
-                </ShortColumnContainer>
-                <ShortColumnContainer>
-                    <TitleLabel>데이터</TitleLabel>
-                    <InfoInput name='KCD' value={KCD} onChange={onChangeInput}/>
-                </ShortColumnContainer>
-                <ShortColumnContainer>
-                    <TitleLabel>받은주소</TitleLabel>
-                    <InfoInput name='date' value={date} onChange={onChangeInput}/>
-                </ShortColumnContainer>
-            </MarginColumnContainer>
-
+            <WhiteContainer>
+                <Bar>
+                    <AddButtonContainer>
+                        <ManageAddButton onClick = {onClickBtn}>
+                            <ManageAddButtonImage src={SearchButtonImage} />
+                            변환
+                        </ManageAddButton>
+                    </AddButtonContainer>
+                </Bar>
+                <MarginRowContainer>
+                    <MarginColumnContainer>
+                        <ShortColumnContainer>
+                            <TitleLabel>보낸주소</TitleLabel>
+                            <InfoInput>{from}</InfoInput>
+                        </ShortColumnContainer>
+                        <ShortColumnContainer>
+                            <TitleLabel>받은 주소</TitleLabel>
+                            <InfoInput>{to}</InfoInput>
+                        </ShortColumnContainer>
+                        <ShortColumnContainer>
+                            <TitleLabel>Transaction Hash</TitleLabel>
+                            <InfoInput>{address}</InfoInput>
+                        </ShortColumnContainer>
+                        <ShortColumnContainer>
+                            <TitleLabel>데이터</TitleLabel>
+                            <DataInput>{data}</DataInput>
+                        </ShortColumnContainer>
+                    </MarginColumnContainer>
+                    <MarginColumnContainer>
+                        <ShortColumnContainer>
+                            <RightLabel>변환데이터</RightLabel>
+                            <DataOutput><PrettyJson data={decodeData} /></DataOutput>
+                        </ShortColumnContainer>
+                    </MarginColumnContainer>
+                </MarginRowContainer>
+            </WhiteContainer>
         </Container>
 
     );
