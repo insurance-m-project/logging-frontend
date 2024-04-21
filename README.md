@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+> 2024 메리츠화재 인턴십 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 보험 서류 청구 자동화 시스템 로깅 DApp
+**'독감'** 보험 서류 청구 시, 총 9 단계의 프로세스를 2 단계로 줄일 수 있는 **이더리움 스마트 컨트랙트** 기반 DApp
 
-## Available Scripts
+### As-is
+```
+1. 진료비 영수증, 진료비 세부산정내역을 병원에서 환자가 직접 발급
+2. 메리츠화재 앱에서 보험금 청구 메뉴 접속
+3. 로그인
+4. 청구유형 선택
+5. 치료받을 분 선택
+6. 필수약관 동의 선택
+7. 청구 정보 입력 선택 (사고유형, 사고일자, 진단 및 청구 내용, 이메일 등 입력)
+8. 입금 계좌정보 (청구 대행서비스, 의료급여 수급권자 여부 선택)
+9. 보험금에 필요한 서류 전송 (진료비 계산 영수증, 진료비 세부 내역서 등을 카메라로 촬영하여 전송)
+```
 
-In the project directory, you can run:
+### To-be
+```
+1. 보험 서류 청구 자동화 동의
+2. 병원에서 DApp에 직접 접속하여 독감 보험금 접수 버튼 클릭
+```
 
-### `npm start`
+## Tech Stack
+### Web
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white">
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"> 
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
+<img src="https://img.shields.io/badge/node.js-6DB33F?style=for-the-badge&logo=nodedotjs&logoColor=white">
+<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"> 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Block-Chain Skill
+<img src="https://img.shields.io/badge/ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white"> <img src="https://img.shields.io/badge/web3.js-F16822?style=for-the-badge&logo=web3dotjs&logoColor=white"> <img src="https://img.shields.io/badge/metamask-E88A3A?style=for-the-badge&logo=metamask&logoColor=white"> 
 
-### `npm test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Communication Tool
+<img src="https://img.shields.io/badge/InteliJ-0071C5?style=for-the-badge&logo=intellijidea&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/> <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white"/> 
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Commit/PR Convention
+### Commit Convention
+```
+feat/1-create-project
+```
+- 커밋태그/이슈번호-개발요약
+<br>
 
-### `npm run eject`
+**Pull Request**
+```
+[feat/1-create-project] 프로젝트 생성
+```
+- [브랜치 이름] PR 설명
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<br>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 구현 화면
+<img width="1485" alt="스크린샷 2024-04-21 오후 9 35 18" src="https://github.com/insurance-m-project/logging-frontend/assets/90203250/8c720a69-2ced-4e95-9c0e-06c0a9e35114">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
