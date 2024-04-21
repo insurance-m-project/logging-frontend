@@ -76,30 +76,36 @@ const RightLabel = Styled(TitleLabel)`
    margin-right: 0px;
 `
 
-const InfoInput = Styled.p`
+const Input = Styled.p`
   flex: 1;
   min-width: 300px;
   max-width: 300px;
-  height: 20px;
+  height: 30px;
   border-radius: 8px;
-  border: 2px solid #E6E6E6;
+  border: 1px solid #E6E6E6;
   
   display: inline-block; 
   font-size: 20px;
   padding: 10px;
   text-align: left;
-  overflow-x: auto;
+`
+
+const InfoInput = Styled(Input)`
+  overflow-y: hidden;
 `
 
 
-const DataInput = Styled(InfoInput)`
-  height: 270px;
+const DataInput = Styled(Input)`
+  height: 200px;
   word-wrap: break-word;
+  overflow-y: scroll;
+  font-size: 20px;
 `
 
-const DataOutput = Styled(InfoInput)`
+const DataOutput = Styled(Input)`
   min-width: 500px;
   height: 450px;
+  overflow-y: scroll;
 `
 
 const MarginRowContainer = Styled.div`
@@ -158,7 +164,6 @@ function LoggingDetail() {
     }, [web3]);
 
     const onClickBtn = event => {
-        alert("실행");
         const abi = MedicalRecords.abi;
         console.log();
         const dataToJson = JSON.stringify(web3.eth.abi.decodeParameters(abi[0].inputs, data), null, 2);
