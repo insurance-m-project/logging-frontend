@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Styled from "styled-components"
-import {Container, SystemTitleLogo, WhiteContainer} from "../../components/container/Container";
+import {Container, SystemLink, SystemTitleLogo, WhiteContainer} from "../../components/container/Container";
 import MeritzLogo from "../../images/MeritzLogo.svg";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import SearchButtonImage from "../../images/SearchPlus.svg"
 import MedicalRecords from "../../components/contracts/MedicalRecords.json";
 import UseWeb3 from "../../hooks/UseWeb3";
@@ -172,7 +172,7 @@ function LoggingDetail() {
     // const onChange
     return (
         <Container>
-            <SystemTitleLogo src={MeritzLogo}></SystemTitleLogo>
+            <SystemLink><Link to={'/'}><SystemTitleLogo src={MeritzLogo}></SystemTitleLogo></Link></SystemLink>
             <WhiteContainer>
                 <Bar>
                     <AddButtonContainer>

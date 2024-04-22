@@ -39,6 +39,12 @@ export const SystemTitleLogo = styled.img`
   margin-left: 10px;
 `
 
+// 링크 태그 감싸는 div
+export const SystemLink = styled.div`
+  margin-left: 10px;
+  text-align: left;
+`
+
 // 병원 명
 export const HospitalText = styled.text`
   color: #4C4C4C;
