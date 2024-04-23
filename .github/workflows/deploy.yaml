@@ -30,7 +30,12 @@ jobs:
           port: 22
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            docker rm -f $(docker ps --filter name=logging -a -q)
+            if docker ps -a | grep -q logging; then
+            docker stop logging
+            docker rm logging
+            fi
+            if docker images -a | grep -q ${{ secrets.DOCKER_USERNAME }}/logging; then
+            docker rmi -f ${{ secrets.DOCKER_USERNAME }}/logging
+            fi
             docker pull ${{ secrets.DOCKER_USERNAME }}/logging
-            docker run -d -p 5000:3000 ${{ secrets.DOCKER_USERNAME }}/logging
-            docker image prune -f
+            docker run -d -p 5000:3000 --username logging ${{ secrets.DOCKER_USERNAME }}/logging
