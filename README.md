@@ -50,6 +50,8 @@
 <br>
 
 ## Project Structure 
+![cicd](https://github.com/insurance-m-project/logging-frontend/assets/90203250/a70af1e9-d730-40bb-9e07-b08636abc0b0)
+
 
 <br>
 
@@ -72,4 +74,6 @@ feat/1-create-project
 
 ## 구현 화면
 <img width="1485" alt="스크린샷 2024-04-21 오후 9 35 18" src="https://github.com/insurance-m-project/logging-frontend/assets/90203250/8c720a69-2ced-4e95-9c0e-06c0a9e35114">
+<img width="1452" alt="스크린샷 2024-04-25 오후 3 22 42" src="https://github.com/insurance-m-project/logging-frontend/assets/90203250/e5366e57-c30f-4dba-adba-fd603ac6ee74">
+
 
